@@ -22,14 +22,6 @@
 import http_client
 
 
-def get_by_id(id, **params):
-    path = '/genetree/id/%s' % id
-    return http_client.get(path, **params)
-
-def get_by_member_id(id, **params):
-    path = '/genetree/member/id/%s' % id
-    return http_client.get(path, **params)
-
-def get_by_member_symbol(species, symbol, **params):
-    path = '/genetree/member/symbol/%s/%s' % (species, symbol)
+def get_by_species_and_region(species, region, **params):
+    path = '/alignment/region/%s/%s' % (species, region)
     return http_client.get(path, **params)
