@@ -19,22 +19,18 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
-import requests
 import ensembl
-from ensembl.exceptions import EnsembleError
+import http_client
 
 
-DEFAULT_PARAMS = { 'content-type': 'application/json' }
+def get_by_id(id, **params):
+    path = '/genetree/id/%s' % id
+    return http_client.get(path, **params)
 
+def get_by_member_id(id, **params):
+    path = '/genetree/member/id/%s' % id
+    return http_client.get(path, **params)
 
-def get(path, **kwargs):
-    url = ensembl.api_base_url + path
-    params = DEFAULT_PARAMS.copy()
-    params.update(kwargs)
-    response = requests.get(url, params=params, verify=False).json()
-    _raise_error_if_not_ok(response)
-    return response
-
-def _raise_error_if_not_ok(response):
-    if 'error' in response:
-        raise EnsembleError(response['error'])
+def get_by_member_symbol(species, symbol, **params):
+    path = '/genetree/member/symbol/%s/%s' % (species, symbol)
+    return http_client.get(path, **params)
